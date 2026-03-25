@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gree T — Thés Bio d'Exception</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --vert:      #2e4a34;
+      --vert-clair:#5c7a62;
+      --vert-pale: #b8ccb4;
+      --beige:     #f4efe5;
+      --beige-fonce:#e6ddd0;
+      --brun:      #7a6652;
+      --blanc:     #fdfcfa;
+      --noir:      #1a1a1a;
+      --serif:     'Cormorant Garamond', serif;
+      --sans:      'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--blanc); color: var(--noir); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 60px;
+      background: rgba(253,252,250,0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--beige-fonce);
+      transition: box-shadow 0.3s;
+    }
+    .nav-logo {
+      font-family: var(--serif); font-size: 1.7rem; font-weight: 300;
+      letter-spacing: 4px; color: var(--vert); text-decoration: none;
+    }
+    .nav-logo span { font-style: italic; color: var(--brun); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--noir); text-decoration: none; transition: color .3s;
+    }
+    .nav-links a:hover { color: var(--vert); }
+    .nav-cta {
+      font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+      padding: 10px 24px; border: 1px solid var(--vert);
+      color: var(--vert); background: transparent; cursor: pointer;
+      transition: all .3s; text-decoration: none;
+    }
+    .nav-cta:hover { background: var(--vert); color: var(--blanc); }
+
+    /* ── HERO ── */
+    .hero {
+      height: 100vh; position: relative;
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=1800&q=80&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, rgba(244,239,229,0.96) 42%, rgba(244,239,229,0.5) 70%, rgba(244,239,229,0.1) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding-left: 10%;
+      max-width: 680px;
+    }
+    .hero-eyebrow {
+      font-family: var(--sans); font-size: 0.72rem;
+      letter-spacing: 5px; text-transform: uppercase;
+      color: var(--vert-clair); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: inline-block;
+      width: 32px; height: 1px; background: var(--vert-clair);
+    }
+    .hero-title {
+      font-family: var(--serif); font-size: clamp(3.4rem, 7vw, 6.2rem);
+      font-weight: 300; line-height: 1.06; color: var(--vert);
+      margin-bottom: 28px;
+    }
+    .hero-title em { font-style: italic; color: var(--brun); }
+    .hero-sub {
+      font-size: 1rem; font-weight: 300; line-height: 1.85;
+      color: #4a4a4a; max-width: 420px; margin-bottom: 48px;
+    }
+    .btn-primary {
+      display: inline-block; padding: 15px 40px;
+      background: var(--vert); color: var(--blanc);
+      font-size: 0.76rem; letter-spacing: 3px; text-transform: uppercase;
+      text-decoration: none; transition: background .3s;
+    }
+    .btn-primary:hover { background: var(--vert-clair); }
+    .btn-outline {
+      display: inline-block; padding: 15px 40px; margin-left: 16px;
+      border: 1px solid var(--vert); color: var(--vert);
+      font-size: 0.76rem; letter-spacing: 3px; text-transform: uppercase;
+      text-decoration: none; transition: all .3s;
+    }
+    .btn-outline:hover { background: var(--vert); color: var(--blanc); }
+
+    .hero-scroll {
+      position: absolute; bottom: 42px; right: 10%;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      font-size: 0.62rem; letter-spacing: 4px; text-transform: uppercase;
+      color: var(--brun); z-index: 2;
+      writing-mode: vertical-rl; text-orientation: mixed;
+    }
+    .hero-scroll::after {
+      content: ''; display: block; width: 1px; height: 60px; background: var(--brun);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine { 0%,100%{opacity:.15} 50%{opacity:0.8} }
+
+    /* ── BANDEAU VALEURS ── */
+    .valeurs {
+      background: var(--vert);
+      display: flex; justify-content: center;
+    }
+    .valeur-item {
+      flex: 1; max-width: 320px;
+      padding: 46px 36px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.12);
+      position: relative;
+    }
+    .valeur-item:last-child { border-right: none; }
+
+    /* SVG icons remplaçant les emojis */
+    .valeur-icon {
+      width: 38px; height: 38px;
+      margin: 0 auto 18px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .valeur-icon svg {
+      width: 100%; height: 100%;
+      stroke: var(--vert-pale); fill: none; stroke-width: 1.4;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
+    .valeur-item h4 {
+      font-family: var(--serif); font-size: 1.2rem; font-weight: 400;
+      color: #fff; margin-bottom: 10px; letter-spacing: 0.5px;
+    }
+    .valeur-item p {
+      font-size: 0.8rem; font-weight: 300;
+      color: rgba(255,255,255,0.72); line-height: 1.7;
+    }
+
+    /* ── SECTION GÉNÉRIQUE ── */
+    section { padding: 110px 60px; }
+    .section-label {
+      font-size: 0.68rem; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--vert-clair); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .section-label::before {
+      content: ''; display: inline-block;
+      width: 28px; height: 1px; background: var(--vert-clair);
+    }
+    .section-title {
+      font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.6rem);
+      font-weight: 300; line-height: 1.12; color: var(--vert);
+      margin-bottom: 22px;
+    }
+    .section-title em { font-style: italic; color: var(--brun); }
+    .section-desc {
+      font-size: 0.95rem; font-weight: 300; line-height: 1.95;
+      color: #5a5a5a; max-width: 500px;
+    }
+    .divider {
+      width: 44px; height: 1px; background: var(--vert-clair);
+      margin: 30px 0;
+    }
+
+    /* ── À PROPOS ── */
+    .about { background: var(--blanc); }
+    .about-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 90px; align-items: center;
+    }
+    .about-img-wrap { position: relative; }
+    .about-img-main {
+      width: 100%; aspect-ratio: 3/4;
+      object-fit: cover; display: block;
+    }
+    .about-img-accent {
+      position: absolute; bottom: -32px; right: -32px;
+      width: 46%; aspect-ratio: 1;
+      object-fit: cover;
+      border: 7px solid var(--blanc);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+    }
+    .about-text { padding-right: 10px; }
+    .about-stats {
+      display: flex; gap: 44px; margin-top: 48px;
+      padding-top: 44px; border-top: 1px solid var(--beige-fonce);
+    }
+    .stat-num {
+      font-family: var(--serif); font-size: 3rem; font-weight: 300;
+      color: var(--vert); line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--brun); margin-top: 8px; line-height: 1.5;
+    }
+
+    /* ── COLLECTIONS ── */
+    .collections { background: var(--beige); }
+    .coll-header {
+      max-width: 1200px; margin: 0 auto 64px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .coll-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .card {
+      background: var(--blanc); overflow: hidden;
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94), box-shadow .4s;
+      cursor: pointer;
+    }
+    .card:hover { transform: translateY(-7px); box-shadow: 0 22px 60px rgba(46,74,52,.11); }
+    .card-img-wrap { overflow: hidden; aspect-ratio: 4/3; }
+    .card-img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .7s cubic-bezier(.25,.46,.45,.94);
+      display: block;
+    }
+    .card:hover .card-img { transform: scale(1.08); }
+    .card-body { padding: 28px 26px 34px; }
+    .card-tag {
+      font-size: 0.63rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--vert-clair); margin-bottom: 12px;
+    }
+    .card-name {
+      font-family: var(--serif); font-size: 1.55rem; font-weight: 400;
+      color: var(--vert); margin-bottom: 12px; line-height: 1.2;
+    }
+    .card-desc {
+      font-size: 0.84rem; font-weight: 300; line-height: 1.75;
+      color: #666; margin-bottom: 22px;
+    }
+    .card-footer { display: flex; justify-content: space-between; align-items: center; }
+    .card-price { font-family: var(--serif); font-size: 1.3rem; color: var(--brun); }
+    .card-btn {
+      font-size: 0.67rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--vert); border-bottom: 1px solid var(--vert);
+      padding-bottom: 3px; text-decoration: none; transition: opacity .3s;
+    }
+    .card-btn:hover { opacity: .55; }
+    .card-wide { grid-column: span 2; }
+    .card-wide .card-img-wrap { aspect-ratio: 16/7; }
+
+    /* ── PROCESSUS ── */
+    .processus { background: var(--blanc); }
+    .proc-inner { max-width: 1200px; margin: 0 auto; }
+    .proc-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; margin-top: 70px; position: relative;
+    }
+    .proc-steps::before {
+      content: ''; position: absolute;
+      top: 36px; left: 12.5%; right: 12.5%;
+      height: 1px; background: var(--beige-fonce);
+    }
+    .step { text-align: center; padding: 0 24px; }
+    .step-num {
+      width: 72px; height: 72px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 26px;
+      font-family: var(--serif); font-size: 1.6rem;
+      color: var(--vert); font-weight: 300;
+      position: relative; z-index: 1;
+      background: var(--blanc);
+      border: 1px solid var(--beige-fonce);
+    }
+    .step h4 {
+      font-family: var(--serif); font-size: 1.15rem; font-weight: 400;
+      color: var(--vert); margin-bottom: 12px;
+    }
+    .step p { font-size: 0.82rem; font-weight: 300; line-height: 1.75; color: #666; }
+
+    /* ── VEDETTES ── */
+    .vedettes { background: var(--vert); padding: 110px 60px; }
+    .ved-inner { max-width: 1200px; margin: 0 auto; }
+    .ved-inner .section-label { color: var(--vert-pale); }
+    .ved-inner .section-label::before { background: var(--vert-pale); }
+    .ved-inner .section-title { color: var(--blanc); }
+    .ved-inner .section-desc { color: rgba(255,255,255,.65); }
+    .ved-inner .divider { background: var(--vert-pale); }
+    .ved-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 60px;
+    }
+    .ved-card {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.13);
+      overflow: hidden; transition: background .35s;
+    }
+    .ved-card:hover { background: rgba(255,255,255,.14); }
+    .ved-card img {
+      width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+      transition: transform .6s;
+    }
+    .ved-card:hover img { transform: scale(1.05); }
+    .ved-card-body { padding: 22px 20px 26px; }
+    .ved-card-tag {
+      font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--vert-pale); margin-bottom: 8px;
+    }
+    .ved-card-name {
+      font-family: var(--serif); font-size: 1.32rem; font-weight: 400;
+      color: var(--blanc); margin-bottom: 10px;
+    }
+    .ved-card-note {
+      font-size: 0.8rem; font-weight: 300;
+      color: rgba(255,255,255,.6); line-height: 1.65;
+    }
+
+    /* ── TÉMOIGNAGES ── */
+    .temoignages { background: var(--beige-fonce); }
+    .temo-inner { max-width: 1200px; margin: 0 auto; }
+    .temo-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 64px;
+    }
+    .temo-card {
+      background: var(--blanc); padding: 38px 34px;
+      border-top: 2px solid var(--vert-pale);
+      transition: transform .3s;
+    }
+    .temo-card:hover { transform: translateY(-4px); }
+    .stars { color: var(--vert-clair); font-size: 0.85rem; margin-bottom: 20px; letter-spacing: 3px; }
+    .temo-text {
+      font-family: var(--serif); font-size: 1.1rem; font-weight: 300;
+      font-style: italic; line-height: 1.75; color: #444; margin-bottom: 26px;
+    }
+    .temo-author {
+      font-size: 0.72rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--brun);
+    }
+
+    /* ── NEWSLETTER ── */
+    .newsletter { background: var(--blanc); text-align: center; padding: 110px 60px; }
+    .nl-form {
+      display: flex; justify-content: center; gap: 0;
+      max-width: 460px; margin: 44px auto 0;
+    }
+    .nl-form input {
+      flex: 1; padding: 15px 22px;
+      border: 1px solid var(--beige-fonce); border-right: none;
+      font-family: var(--sans); font-size: 0.85rem; font-weight: 300;
+      background: var(--beige); outline: none; color: var(--noir);
+    }
+    .nl-form input:focus { border-color: var(--vert-pale); }
+    .nl-form button {
+      padding: 15px 30px;
+      background: var(--vert); color: var(--blanc); border: none;
+      font-family: var(--sans); font-size: 0.74rem; letter-spacing: 2.5px;
+      text-transform: uppercase; cursor: pointer; transition: background .3s;
+    }
+    .nl-form button:hover { background: var(--vert-clair); }
+
+    /* ── FOOTER ── */
+    footer { background: var(--noir); color: rgba(255,255,255,.55); padding: 80px 60px 38px; }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 64px;
+      padding-bottom: 54px; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .footer-logo {
+      font-family: var(--serif); font-size: 1.55rem; font-weight: 300;
+      letter-spacing: 4px; color: #fff; margin-bottom: 18px; display: block;
+    }
+    .footer-logo span { font-style: italic; color: var(--vert-pale); }
+    .footer-brand p { font-size: 0.82rem; line-height: 1.85; max-width: 260px; }
+    .footer-col h5 {
+      font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+      color: #fff; margin-bottom: 22px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 12px; }
+    .footer-col a {
+      font-size: 0.82rem; color: rgba(255,255,255,.5);
+      text-decoration: none; transition: color .3s;
+    }
+    .footer-col a:hover { color: var(--vert-pale); }
+    .footer-bottom {
+      max-width: 1200px; margin: 30px auto 0;
+      display: flex; justify-content: space-between;
+      font-size: 0.73rem; color: rgba(255,255,255,.28);
+    }
+    .social-links { display: flex; gap: 14px; margin-top: 24px; }
+    .social-links a {
+      width: 36px; height: 36px; border: 1px solid rgba(255,255,255,.18);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; transition: all .3s;
+    }
+    .social-links a:hover { border-color: var(--vert-pale); }
+    .social-links svg {
+      width: 14px; height: 14px; stroke: rgba(255,255,255,.5);
+      fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+      transition: stroke .3s;
+    }
+    .social-links a:hover svg { stroke: var(--vert-pale); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      nav { padding: 18px 30px; }
+      .nav-links { display: none; }
+      section { padding: 80px 30px; }
+      .about-inner { grid-template-columns: 1fr; gap: 50px; }
+      .about-img-accent { display: none; }
+      .coll-grid { grid-template-columns: repeat(2, 1fr); }
+      .card-wide { grid-column: span 2; }
+      .proc-steps { grid-template-columns: repeat(2, 1fr); gap: 48px; }
+      .proc-steps::before { display: none; }
+      .ved-grid { grid-template-columns: repeat(2, 1fr); }
+      .temo-grid { grid-template-columns: 1fr 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 44px; }
+    }
+    @media (max-width: 640px) {
+      .hero-content { padding: 0 24px; }
+      .coll-grid, .ved-grid, .temo-grid { grid-template-columns: 1fr; }
+      .card-wide { grid-column: span 1; }
+      .valeurs { flex-direction: column; align-items: center; }
+      .valeur-item { max-width: 100%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.1); }
+      .footer-inner { grid-template-columns: 1fr; }
+      .nl-form { flex-direction: column; }
+      .nl-form input { border-right: 1px solid var(--beige-fonce); border-bottom: none; }
+      .about-stats { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════ NAV ════════════ -->
+<nav>
+  <a class="nav-logo" href="#">Gree<span>T</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Notre histoire</a></li>
+    <li><a href="#collections">Collections</a></li>
+    <li><a href="#processus">Processus</a></li>
+    <li><a href="#vedettes">Sélection</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#collections">Découvrir</a>
+</nav>
+
+<!-- ════════════ HERO ════════════ -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Thés Bio d'Exception</p>
+    <h1 class="hero-title">L'art du thé,<br><em>à l'état pur</em></h1>
+    <p class="hero-sub">Des jardins certifiés bio aux mains des artisans passionnés, chaque feuille porte en elle le soin de la terre et la promesse d'un instant singulier.</p>
+    <a class="btn-primary" href="#collections">Explorer les thés</a>
+    <a class="btn-outline" href="#about">Notre histoire</a>
+  </div>
+  <div class="hero-scroll">Défiler</div>
+</section>
+
+<!-- ════════════ BANDEAU VALEURS ════════════ -->
+<div class="valeurs">
+  <!-- 100% Bio -->
+  <div class="valeur-item">
+    <div class="valeur-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2C6.5 2 3 7 3 12s3.5 10 9 10 9-4.5 9-10"/>
+        <path d="M12 2c0 5.5-4 9-9 10"/>
+        <path d="M12 2c2 4 6 7 9 10"/>
+        <line x1="12" y1="12" x2="12" y2="22"/>
+      </svg>
+    </div>
+    <h4>100 % Bio</h4>
+    <p>Tous nos thés sont certifiés agriculture biologique, sans pesticide ni additif.</p>
+  </div>
+  <!-- Cueillette Artisanale -->
+  <div class="valeur-item">
+    <div class="valeur-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M7 17l5-12 5 12"/>
+        <path d="M9.5 12h5"/>
+        <path d="M4 20h16"/>
+        <path d="M12 5V2"/>
+      </svg>
+    </div>
+    <h4>Cueillette Artisanale</h4>
+    <p>Sélectionnés à la main par des producteurs engagés, dans le respect des saisons.</p>
+  </div>
+  <!-- Éco-Responsable -->
+  <div class="valeur-item">
+    <div class="valeur-icon">
+      <svg viewBox="0 0 24 24">
+        <polyline points="23 4 23 10 17 10"/>
+        <polyline points="1 20 1 14 7 14"/>
+        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10"/>
+        <path d="M20.49 15a9 9 0 0 1-14.85 3.36L1 14"/>
+      </svg>
+    </div>
+    <h4>Éco-Responsable</h4>
+    <p>Emballages recyclables, chaîne courte et traçabilité complète de la feuille à la tasse.</p>
+  </div>
+  <!-- Livraison Soignée -->
+  <div class="valeur-item">
+    <div class="valeur-icon">
+      <svg viewBox="0 0 24 24">
+        <rect x="1" y="3" width="15" height="13" rx="1"/>
+        <path d="M16 8h4l3 3v5h-7V8z"/>
+        <circle cx="5.5" cy="18.5" r="2.5"/>
+        <circle cx="18.5" cy="18.5" r="2.5"/>
+      </svg>
+    </div>
+    <h4>Livraison Soignée</h4>
+    <p>Expédié sous 24h en boîte kraft hermétique pour préserver les arômes intacts.</p>
+  </div>
+</div>
+
+<!-- ════════════ À PROPOS ════════════ -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-img-wrap">
+      <img class="about-img-main"
+        src="https://images.unsplash.com/photo-1594631661960-34c76a4e0453?w=800&q=80&auto=format&fit=crop"
+        alt="Jardin de thé bio"/>
+      <img class="about-img-accent"
+        src="https://images.unsplash.com/photo-1576092762791-dd9e2220abd1?w=400&q=80&auto=format&fit=crop"
+        alt="Feuilles de thé fraîches"/>
+    </div>
+    <div class="about-text">
+      <p class="section-label">Notre histoire</p>
+      <h2 class="section-title">Née d'une passion,<br><em>cultivée avec soin</em></h2>
+      <div class="divider"></div>
+      <p class="section-desc">Fondée en 2017 par deux amoureux du thé de retour d'un long voyage en Asie, Gree T est née de la conviction que le thé bio peut être à la fois d'une qualité exceptionnelle et accessible à tous.</p>
+      <br>
+      <p class="section-desc">Nous travaillons en direct avec des agriculteurs familiaux certifiés, en Chine, au Japon et en Inde, pour vous offrir une gamme honnête, traçable et profondément aromatique.</p>
+      <div class="about-stats">
+        <div>
+          <div class="stat-num">12+</div>
+          <div class="stat-label">Producteurs<br>partenaires</div>
+        </div>
+        <div>
+          <div class="stat-num">40</div>
+          <div class="stat-label">Références<br>bio</div>
+        </div>
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label">Pays<br>d'origine</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ COLLECTIONS ════════════ -->
+<section class="collections" id="collections">
+  <div class="coll-header">
+    <div>
+      <p class="section-label">Nos collections</p>
+      <h2 class="section-title">Thés <em>soigneusement</em><br>sélectionnés</h2>
+    </div>
+    <a class="btn-outline" href="#">Voir tout</a>
+  </div>
+  <div class="coll-grid">
+
+    <div class="card card-wide">
+      <div class="card-img-wrap">
+        <img class="card-img"
+          src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=1100&q=80&auto=format&fit=crop"
+          alt="Gyokuro Japonais"/>
+      </div>
+      <div class="card-body">
+        <p class="card-tag">Coup de cœur — Japon</p>
+        <h3 class="card-name">Gyokuro Aomori Bio</h3>
+        <p class="card-desc">Le thé vert à l'ombre par excellence. Notes d'algues, de douceur végétale et d'umami profond. Récolte de printemps, cultivé sans intrants depuis 1982.</p>
+        <div class="card-footer">
+          <span class="card-price">À partir de 18,50 €</span>
+          <a class="card-btn" href="#">Découvrir →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img"
+          src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=700&q=80&auto=format&fit=crop"
+          alt="Thé blanc Bai Mu Dan"/>
+      </div>
+      <div class="card-body">
+        <p class="card-tag">Thé Blanc — Chine</p>
+        <h3 class="card-name">Bai Mu Dan Suprême</h3>
+        <p class="card-desc">Floral, délicat et aérien. Fleurs blanches et miel doux en tasse. Récolte exclusive de Fuding.</p>
+        <div class="card-footer">
+          <span class="card-price">14,00 €</span>
+          <a class="card-btn" href="#">Découvrir →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img"
+          src="https://images.unsplash.com/photo-1631209121750-a9f656d28f77?w=700&q=80&auto=format&fit=crop"
+          alt="Darjeeling First Flush"/>
+      </div>
+      <div class="card-body">
+        <p class="card-tag">Thé Noir — Inde</p>
+        <h3 class="card-name">Darjeeling First Flush</h3>
+        <p class="card-desc">Fruité et vif, le champagne des thés. Cueillette de mars, floral avec une pointe muscatée.</p>
+        <div class="card-footer">
+          <span class="card-price">12,50 €</span>
+          <a class="card-btn" href="#">Découvrir →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img"
+          src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=700&q=80&auto=format&fit=crop"
+          alt="Matcha cérémonial Uji"/>
+      </div>
+      <div class="card-body">
+        <p class="card-tag">Matcha — Japon</p>
+        <h3 class="card-name">Matcha Cérémonial Uji</h3>
+        <p class="card-desc">Vivant, onctueux, profondément vert. Mouture sur meule de pierre. Idéal pour la cérémonie et la pâtisserie.</p>
+        <div class="card-footer">
+          <span class="card-price">22,00 €</span>
+          <a class="card-btn" href="#">Découvrir →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-img-wrap">
+        <img class="card-img"
+          src="https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=700&q=80&auto=format&fit=crop"
+          alt="Oolong Ali Shan Taiwan"/>
+      </div>
+      <div class="card-body">
+        <p class="card-tag">Oolong — Taiwan</p>
+        <h3 class="card-name">High Mountain Ali Shan</h3>
+        <p class="card-desc">Beurré, fleuri, légèrement crémeux. Cultivé à 1600 m d'altitude. Notes de lait et de fleur de jasmin.</p>
+        <div class="card-footer">
+          <span class="card-price">16,80 €</span>
+          <a class="card-btn" href="#">Découvrir →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════ PROCESSUS ════════════ -->
+<section class="processus" id="processus">
+  <div class="proc-inner">
+    <div style="text-align:center; max-width:580px; margin:0 auto;">
+      <p class="section-label" style="justify-content:center;">De la feuille à la tasse</p>
+      <h2 class="section-title">Un parcours <em>transparent</em><br>& engagé</h2>
+      <div class="divider" style="margin:30px auto;"></div>
+      <p class="section-desc" style="margin:0 auto; text-align:center;">Chaque étape de notre chaîne est pensée pour préserver la qualité du thé et respecter ceux qui le cultivent.</p>
+    </div>
+    <div class="proc-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Sélection sur place</h4>
+        <p>Nous visitons chaque producteur partenaire pour choisir personnellement les lots. Aucune sélection à distance.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Certification Bio</h4>
+        <p>Tous les jardins sont certifiés agriculture biologique par des organismes indépendants reconnus.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Conditionnement Artisanal</h4>
+        <p>Conditionné à la main dans nos ateliers en petites séries pour garantir fraîcheur et traçabilité.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Livraison Éco-Soignée</h4>
+        <p>Expédié sous 24h dans des emballages recyclables, avec une fiche d'infusion personnalisée.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ VEDETTES ════════════ -->
+<section class="vedettes" id="vedettes">
+  <div class="ved-inner">
+    <p class="section-label">Sélection du mois</p>
+    <h2 class="section-title">Nos thés <em>incontournables</em></h2>
+    <div class="divider"></div>
+    <p class="section-desc">Les quatre références qui ont conquis nos clients cette saison.</p>
+    <div class="ved-grid">
+
+      <div class="ved-card">
+        <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600&q=80&auto=format&fit=crop&crop=center" alt="Sencha Kagoshima"/>
+        <div class="ved-card-body">
+          <p class="ved-card-tag">Vert — Japon</p>
+          <h4 class="ved-card-name">Sencha Kagoshima</h4>
+          <p class="ved-card-note">Herbacé, iodé, végétal doux. Le quotidien parfait des amateurs de thé vert.</p>
+        </div>
+      </div>
+
+      <div class="ved-card">
+        <img src="https://images.unsplash.com/photo-1615485500704-8e990f9900f7?w=600&q=80&auto=format&fit=crop" alt="Rooibos Vanille"/>
+        <div class="ved-card-body">
+          <p class="ved-card-tag">Infusion — Afrique du Sud</p>
+          <h4 class="ved-card-name">Rooibos Vanille Bio</h4>
+          <p class="ved-card-note">Sans théine, doux et chaleureux. Parfait pour le soir, apprécié par toute la famille.</p>
+        </div>
+      </div>
+
+      <div class="ved-card">
+        <img src="https://images.unsplash.com/photo-1576092762791-dd9e2220abd1?w=600&q=80&auto=format&fit=crop" alt="Pu-erh Vieilli"/>
+        <div class="ved-card-body">
+          <p class="ved-card-tag">Pu-erh — Yunnan</p>
+          <h4 class="ved-card-name">Pu-erh Vieilli 5 ans</h4>
+          <p class="ved-card-note">Terreux, boisé, profondément complexe. Un thé de méditation pour les connaisseurs.</p>
+        </div>
+      </div>
+
+      <div class="ved-card">
+        <img src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?w=600&q=80&auto=format&fit=crop" alt="Gunpowder Menthe"/>
+        <div class="ved-card-body">
+          <p class="ved-card-tag">Vert Menthe — Maroc</p>
+          <h4 class="ved-card-name">Gunpowder Menthe</h4>
+          <p class="ved-card-note">La tradition du thé à la menthe revisitée en version 100 % bio. Fraîcheur intense.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ TÉMOIGNAGES ════════════ -->
+<section class="temoignages" id="contact">
+  <div class="temo-inner">
+    <div style="text-align:center; max-width:560px; margin:0 auto;">
+      <p class="section-label" style="justify-content:center;">Ils nous font confiance</p>
+      <h2 class="section-title">Ce que disent<br><em>nos clients</em></h2>
+      <div class="divider" style="margin:30px auto;"></div>
+    </div>
+    <div class="temo-grid">
+      <div class="temo-card">
+        <div class="stars">★★★★★</div>
+        <p class="temo-text">« Le Gyokuro est tout simplement le meilleur thé vert que j'ai bu hors du Japon. La qualité est irréprochable et l'emballage absolument soigné. »</p>
+        <p class="temo-author">— Marie L., Lyon</p>
+      </div>
+      <div class="temo-card">
+        <div class="stars">★★★★★</div>
+        <p class="temo-text">« Je suis accro au Matcha Uji depuis ma commande de janvier. Onctueux, profond, rien à voir avec ce qu'on trouve en grande surface. »</p>
+        <p class="temo-author">— Thomas R., Paris</p>
+      </div>
+      <div class="temo-card">
+        <div class="stars">★★★★★</div>
+        <p class="temo-text">« J'apprécie énormément la transparence sur les origines. On sait exactement d'où vient ce qu'on boit. Service client attentif et réactif. »</p>
+        <p class="temo-author">— Céline M., Bordeaux</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ NEWSLETTER ════════════ -->
+<section class="newsletter">
+  <p class="section-label" style="justify-content:center;">Restez informés</p>
+  <h2 class="section-title" style="text-align:center;">Rejoignez la <em>communauté</em><br>Gree T</h2>
+  <p class="section-desc" style="text-align:center; margin:0 auto;">Recevez nos nouvelles sélections, conseils d'infusion et offres exclusives. Pas de spam, juste du thé.</p>
+  <div class="nl-form">
+    <input type="email" placeholder="Votre adresse e-mail"/>
+    <button type="button">S'inscrire</button>
+  </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">Gree<span>T</span></span>
+      <p>Des thés bio d'exception, directement sourcés auprès de producteurs engagés, pour une tasse sincère et aromatique.</p>
+      <div class="social-links">
+        <!-- LinkedIn -->
+        <a href="#" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <!-- Instagram -->
+        <a href="#" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <!-- Facebook -->
+        <a href="#" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <!-- YouTube -->
+        <a href="#" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Collections</h5>
+      <ul>
+        <li><a href="#">Thés Verts</a></li>
+        <li><a href="#">Thés Blancs</a></li>
+        <li><a href="#">Thés Noirs</a></li>
+        <li><a href="#">Oolongs</a></li>
+        <li><a href="#">Matcha</a></li>
+        <li><a href="#">Infusions</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>La Maison</h5>
+      <ul>
+        <li><a href="#">Notre histoire</a></li>
+        <li><a href="#">Nos producteurs</a></li>
+        <li><a href="#">Certifications</a></li>
+        <li><a href="#">Blog & Conseils</a></li>
+        <li><a href="#">Presse</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Service</h5>
+      <ul>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Livraison</a></li>
+        <li><a href="#">Retours</a></li>
+        <li><a href="#">Mentions légales</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Gree T — Tous droits réservés</span>
+    <span>Fait avec soin · Bio · Responsable</span>
+  </div>
+</footer>
+
+</body>
+</html>
